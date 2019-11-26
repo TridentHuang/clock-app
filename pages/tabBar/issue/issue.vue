@@ -7,6 +7,7 @@
 					<view>
 						<text class="endTimeTitle">打卡截止时间 </text>
 						<text class="endTime">
+							
 							{{array[0][arrayIndex[0]]}}{{array[1][arrayIndex[1]]}}
 						</text>
 					</view>
