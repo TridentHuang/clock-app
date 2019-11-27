@@ -49,6 +49,28 @@
 				]
 			}
 		},
+		onLoad() {
+			wx.login({
+				success: function(r) {
+					//获取code
+					let code = r.code
+					wx.getUserInfo({
+						success: function(res) {
+							let nickName = res.userInfo.nickName
+							uni.request({
+								url: 'http://localhost:8080/user/save',
+								method: 'POST',
+								data: {
+									code: code,
+									nickName: nickName
+								},
+								success: res => {},
+							});
+						}
+					})
+				}
+			})
+		},
 		methods: {
 			changeEndTime(e) {
 				console.log(e.detail.value)
@@ -62,8 +84,8 @@
 					url: 'http://localhost:8080/activity/issue',
 					method: 'POST',
 					data: {
-						name:name,
-						endTime:endTime
+						name: name,
+						endTime: endTime
 					}
 				});
 			}
