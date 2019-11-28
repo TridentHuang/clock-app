@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<uni-card :title="activity.name" v-for="activity in activities" note="true">
+		<uni-card :title="activity.name" v-for="(activity,index) in activities" note="true" :key="index">
 			<view class="users">
-				<view class="user" v-for="item in activity.users">{{item.name}}</view>
+				<view class="user" v-for="(item,index) in activity.list" :key="index">{{item.nickName}}</view>
 				<view class="user">...</view>
 			</view>
 			<template v-slot:footer>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+	import url from '@/common/config.js'
 	import {
 		uniCard
 	} from '@dcloudio/uni-ui'
@@ -38,7 +39,7 @@
 								console.log(res.userInfo)
 							}
 						})
-					}else{
+					} else {
 						console.log("未授权")
 					}
 				}
@@ -46,84 +47,22 @@
 		},
 		data() {
 			return {
-				activities: [{
-					name: "百词斩",
-					users: [{
-							name: '张三'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						}
-					]
-				}, {
-					name: "流利说",
-					users: [{
-							name: '张三'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						}
-					]
-				}, {
-					name: "流利说",
-					users: [{
-							name: '张三'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						}
-					]
-				}, {
-					name: "流利说",
-					users: [{
-							name: '张三'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						},
-						{
-							name: '李四'
-						}
-					]
-				}]
-
+				activities: []
 			}
 		},
 		methods: {
 
+		},
+		onLoad() {
+			uni.request({
+				url: url + '/activity/getAll/1',
+				method: 'GET',
+				success: res => {
+					// this.activities = res.data.data
+					console.log(res.data)
+					this.activities = res.data.data;
+				},
+			});
 		}
 	}
 </script>

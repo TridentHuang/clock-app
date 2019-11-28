@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import url from '@/common/config.js'
 	import {
 		uniCard
 	} from '@dcloudio/uni-ui'
@@ -58,7 +59,7 @@
 						success: function(res) {
 							let nickName = res.userInfo.nickName
 							uni.request({
-								url: 'http://localhost:8080/user/save',
+								url: '/user/save',
 								method: 'POST',
 								data: {
 									code: code,
@@ -80,12 +81,40 @@
 				let items = e.detail.value
 				let name = items.name;
 				let endTime = this.array[0][this.arrayIndex[0]] + this.array[1][this.arrayIndex[1]]
+				if (null == name || name == "") {
+					console.log("sd");
+					uni.showToast({
+						title: "名称不能空",
+						icon: 'none',
+						duration: 1500
+					});
+					return;
+				}
+				uni.showLoading({
+					title: '创建中'
+				});
+				console.log("url:"+url)
 				uni.request({
-					url: 'http://localhost:8080/activity/issue',
+					// url: 'http://127.0.0.1:8080/activity/issue',
+					url: url+'/activity/issue',
 					method: 'POST',
 					data: {
+						userId: '1',
 						name: name,
 						endTime: endTime
+					},
+					success(res) {
+						uni.hideLoading();
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						});
+						if (res.data.data == true) {
+							wx.switchTab({
+								url: '/pages/tabBar/my/my'
+							})
+						}
 					}
 				});
 			}
