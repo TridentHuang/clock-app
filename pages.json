@@ -11,6 +11,12 @@
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
+		},
+		{
+			"path": "pages/share/record/record",
+			"style": {
+				"navigationBarTitleText": "打卡"
+			}
 		}
 	],
 	"globalStyle": {

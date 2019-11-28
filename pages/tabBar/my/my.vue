@@ -9,6 +9,7 @@
 				<button type="primary" class="share" open-type="share" size="mini">分享</button>
 			</template>
 		</uni-card>
+		<button type="primary" @click="share">分享测试</button>
 	</view>
 </template>
 
@@ -24,7 +25,7 @@
 		onShareAppMessage(res) {
 			return {
 				title: '微信小程序测试分享',
-				path: '/pages/tabBar/issue/issue'
+				path: '/pages/share/record/record'
 			}
 		},
 		onLoad: function() {
@@ -51,14 +52,18 @@
 			}
 		},
 		methods: {
-
+			share() {
+				wx.navigateTo({
+					url: '/pages/share/record/record'
+				})
+			}
 		},
 		onLoad() {
+			console.log("进来了")
 			uni.request({
 				url: url + '/activity/getAll/1',
 				method: 'GET',
 				success: res => {
-					// this.activities = res.data.data
 					console.log(res.data)
 					this.activities = res.data.data;
 				},
